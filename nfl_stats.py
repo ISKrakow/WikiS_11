@@ -40,4 +40,23 @@ for player in sorted(qb_yards, key=qb_yards.get, reverse=True):
     print(player, qb_yards[player])
     
     
-    
+#plot the players by their number of passing yards only for players with more than 4000 passing yards
+import matplotlib.pyplot as plt
+import numpy as np
+
+qb_yards = {}
+for row in nfl_stats:
+    if row[2] == "QB":
+        if row[3] in qb_yards:
+            qb_yards[row[3]] += int(row[7])
+        else:
+            qb_yards[row[3]] = int(row[7])
+            
+qb_yards_over_4000 = {}
+for player in qb_yards:
+    if qb_yards[player] > 4000:
+        qb_yards_over_4000[player] = qb_yards[player]
+
+plt.bar(range(len(qb_yards_over_4000)), list(qb_yards_over_4000.values()), align='center')
+plt.xticks(range(len(qb_yards_over_4000)), list(qb_yards_over_4000.keys()), rotation=90)
+plt.show()
